@@ -22,7 +22,8 @@ namespace MvcProjectKampi.Controllers
         Context c = new Context();
         public ActionResult GetAllContent()
         {
-            var values=
+            var values=c.Contents.ToList();
+            return View(values);
         }
         public ActionResult ContentByHeading(int id)
         {
