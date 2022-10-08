@@ -13,21 +13,25 @@ namespace MvcProjectKampi.Controllers
     {
         // GET: Content
         ContentManager cm = new ContentManager(new EfContentDal());
-
+        Context c = new Context();
         public ActionResult Index()
         {
             return View();
         }
-
-        Context c = new Context();
-        public ActionResult GetAllContent()
+        public ActionResult GetAllContent(string p)
         {
-            var values=c.Contents.ToList();
+            var values = (from x in c.Contents 
+                          select x).ToList();
+            if (!string.IsNullOrEmpty(p))
+            {
+                values = cm.GetList(p);
+            }
+
             return View(values);
         }
         public ActionResult ContentByHeading(int id)
         {
-            var contentValues=cm.GetListByHeadingID(id);
+            var contentValues = cm.GetListByHeadingID(id);
             return View(contentValues);
         }
     }
